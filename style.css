@@ -1,0 +1,48 @@
+body {
+	font-family: Arial;
+	/*line-height: 1.5;*/
+}
+h1 {
+	padding-left: 25px;
+	text-decoration: none;
+	color: black;
+}
+a {
+	text-decoration: none;
+	color: black;
+}
+a:hover {
+	text-decoration: none;
+	color: darkorange;
+}
+.tweet {
+	color: black;
+	padding: 20px;
+	padding-left: 50px;
+	border-top: solid gray 1px;
+}
+.tweet:hover {
+	background-color: lavender;
+}
+.user {
+	font-weight: bold;
+	color: darkblue;
+}
+.user:hover {
+	color: darkorange;
+	text-decoration: underline;
+}
+.msg {
+
+}
+.time {
+	font-size: small;
+	color: gray;
+	font-style: italic;
+}
+.time:hover {
+	color: darkorange;
+}
+.hidden {
+	display: none;
+}

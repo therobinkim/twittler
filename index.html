@@ -3,23 +3,67 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
     <script>
 
       $(document).ready(function(){
         var $body = $('body');
-        $body.html('');
-
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
-        }
-
+        $body.html('<h1><a id="refresh">Twittler</a> / <a href="https://github.com/therobinkim">therobinkim</a></h1>');
+        var animate = false;
+        var i = 0;
+        var username, intervalID;
+        var showTweets = function() {
+          for(i; i < streams.home.length; i++) {
+            var tweet = streams.home[i];
+            var $tweet = $('<div class="tweet hidden"></div>');
+            var user = '<span class="user ' + tweet.user + '">' + tweet.user + '</span>';
+            var msg = '<span class="msg">' + tweet.message + '</span>';
+            var time = '<span class="time">' + tweet.created_at.toLocaleTimeString() + '</span>';
+            $tweet.html('@' + user + ' ' + time + '<br />' + msg);
+            $tweet.insertAfter($('h1'));
+          }
+          if(animate) {
+            if(username == undefined) {
+              // $('.hidden').slideDown();
+              $('.hidden').removeClass('hidden').removeAttr('style');
+            }
+            else {
+              // $('.' + username).parent().slideDown();
+              $('.' + username).parent().removeClass('hidden').removeAttr('style');
+            }
+          }
+          else {
+            if(username == undefined) {
+              $('.hidden').removeClass('hidden').removeAttr('style');
+            }
+            else {
+              $('.' + username).parent().removeClass('hidden').removeAttr('style');
+            }
+            animate = true;
+          }
+        };
+        // $('body').on('click', '')
+        $('body').on('click', '.user', function() {
+          window.clearInterval(intervalID);
+          username = $(this).text();
+          $('.tweet').removeClass('hidden').removeAttr('style');
+          $('.tweet').addClass('hidden');
+          animate = false;
+          showTweets();
+          intervalID = setInterval(showTweets, 1500);
+        });
+        $('body').on('click', '#refresh', function() {
+          window.clearInterval(intervalID);
+          $('.tweet').removeClass('hidden').removeAttr('style');
+          animate = false;
+          username = undefined;
+          showTweets();
+          intervalID = setInterval(showTweets, 1500);
+        });
+        showTweets();
+        intervalID = setInterval(showTweets, 1500);
       });
 
     </script>
